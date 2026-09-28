@@ -1,10 +1,11 @@
 import { motion, useReducedMotion } from 'framer-motion'
-import { projects } from '../data/projects.js'
+import { usePublishedProjects } from '../hooks/usePublishedProjects.js'
 import Reveal from './Reveal.jsx'
 import './Portfolio.css'
 
 export default function Portfolio() {
   const reduceMotion = useReducedMotion()
+  const { projects } = usePublishedProjects()
 
   return (
     <section id="work" className="section portfolio">

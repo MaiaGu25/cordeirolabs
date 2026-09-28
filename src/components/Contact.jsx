@@ -1,4 +1,4 @@
-import { contact } from '../data/contact.js'
+import { useSiteSettings } from '../hooks/useSiteSettings.js'
 import Reveal from './Reveal.jsx'
 import GlassButton from './GlassButton.jsx'
 import { ArrowIcon, InstagramIcon, MailIcon, WhatsappIcon } from './Icons.jsx'
@@ -10,9 +10,10 @@ const ICONS = {
   instagram: InstagramIcon,
 }
 
-const CHANNELS = [contact.email, contact.phone, contact.instagram]
-
 export default function Contact() {
+  const contact = useSiteSettings()
+  const channels = [contact.email, contact.phone, contact.instagram]
+
   return (
     <section id="contact" className="section contact">
       <Reveal className="contact__intro">
@@ -24,7 +25,7 @@ export default function Contact() {
       </Reveal>
 
       <div className="contact__cards">
-        {CHANNELS.map((channel, i) => {
+        {channels.map((channel, i) => {
           const Icon = ICONS[channel.key]
           return (
             <Reveal

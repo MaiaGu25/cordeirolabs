@@ -1,10 +1,12 @@
-import { contact } from '../data/contact.js'
+import { useSiteSettings } from '../hooks/useSiteSettings.js'
 import { InstagramIcon, MailIcon } from './Icons.jsx'
 import './Footer.css'
 
 const year = new Date().getFullYear()
 
 export default function Footer() {
+  const contact = useSiteSettings()
+
   return (
     <footer className="footer">
       <div className="footer__bar">

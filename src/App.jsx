@@ -1,24 +1,47 @@
-import Header from './components/Header.jsx'
-import Hero from './components/Hero.jsx'
-import Portfolio from './components/Portfolio.jsx'
-import Services from './components/Services.jsx'
-import About from './components/About.jsx'
-import Contact from './components/Contact.jsx'
-import Footer from './components/Footer.jsx'
+import { lazy, Suspense } from 'react'
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
+import PublicSite from './pages/PublicSite.jsx'
+
+// Code-split /admin: it pulls in @supabase/supabase-js and the whole admin
+// UI, none of which the public site needs. Most visitors only ever hit
+// `/`, so that work shouldn't be in their bundle.
+const AdminRoot = lazy(() => import('./admin/AdminRoot.jsx'))
+
+function AdminFallback() {
+  return (
+    <div
+      style={{
+        minHeight: '100svh',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        background: 'var(--bg)',
+        color: 'var(--fg-faint)',
+        fontFamily: 'var(--font-body)',
+        fontSize: '14px',
+      }}
+    >
+      Loading…
+    </div>
+  )
+}
 
 function App() {
   return (
-    <>
-      <Header />
-      <main>
-        <Hero />
-        <Portfolio />
-        <Services />
-        <About />
-        <Contact />
-      </main>
-      <Footer />
-    </>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<PublicSite />} />
+        <Route
+          path="/admin"
+          element={
+            <Suspense fallback={<AdminFallback />}>
+              <AdminRoot />
+            </Suspense>
+          }
+        />
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
+    </BrowserRouter>
   )
 }
 
