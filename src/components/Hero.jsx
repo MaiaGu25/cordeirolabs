@@ -1,99 +1,81 @@
-import { motion, useReducedMotion } from 'framer-motion'
-import { ArrowIcon } from './Icons.jsx'
+import { useRef, useState } from 'react'
+import { motion, useScroll, useTransform, useReducedMotion } from 'framer-motion'
+import GlassButton from './GlassButton.jsx'
 import './Hero.css'
 
-const FLOATERS = [
-  {
-    seed: 'hero-float-1',
-    className: 'hero__float hero__float--a',
-    w: 340,
-    h: 420,
-    delay: 0,
-  },
-  {
-    seed: 'hero-float-2',
-    className: 'hero__float hero__float--b',
-    w: 260,
-    h: 200,
-    delay: 0.6,
-  },
-  {
-    seed: 'hero-float-3',
-    className: 'hero__float hero__float--c',
-    w: 220,
-    h: 280,
-    delay: 1.1,
-  },
-]
+const HERO_IMAGE = 'https://picsum.photos/seed/cordeirolabs-hero/1920/1280'
 
+// Scroll Expansion Hero: the section reserves extra scroll height so a
+// sticky, initially-contained frame can scale up to full-bleed purely from
+// natural scroll position (no wheel/touch interception, no preventDefault).
+// On small screens and with `prefers-reduced-motion`, it falls back to a
+// static, single-viewport hero instead.
 export default function Hero() {
   const reduceMotion = useReducedMotion()
+  const sectionRef = useRef(null)
+  const [isCompact] = useState(
+    () => typeof window !== 'undefined' && window.matchMedia('(max-width: 720px)').matches,
+  )
+
+  const expansive = !reduceMotion && !isCompact
+
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ['start start', 'end end'],
+  })
+
+  const frameScale = useTransform(scrollYProgress, [0, 0.55], [0.62, 1])
+  const frameRadius = useTransform(scrollYProgress, [0, 0.55], [32, 0])
+  const copyOpacity = useTransform(scrollYProgress, [0, 0.3], [1, 0])
+  const copyY = useTransform(scrollYProgress, [0, 0.3], [0, -48])
+  const cueOpacity = useTransform(scrollYProgress, [0, 0.12], [1, 0])
 
   return (
-    <section id="topo" className="hero">
-      <div className="hero__field" aria-hidden="true">
-        {FLOATERS.map((f) => (
-          <motion.img
-            key={f.seed}
-            className={f.className}
-            src={`https://picsum.photos/seed/${f.seed}/${f.w}/${f.h}`}
+    <section
+      id="top"
+      ref={sectionRef}
+      className={`hero ${expansive ? 'hero--expansive' : 'hero--simple'}`}
+    >
+      <div className="hero__sticky">
+        <motion.div
+          className="hero__frame"
+          style={expansive ? { scale: frameScale, borderRadius: frameRadius } : undefined}
+        >
+          <img
+            className="hero__frame-img"
+            src={HERO_IMAGE}
             alt=""
-            width={f.w}
-            height={f.h}
+            width={1920}
+            height={1280}
             loading="eager"
-            initial={{ opacity: 0, y: 30 }}
-            animate={
-              reduceMotion
-                ? { opacity: 1, y: 0 }
-                : { opacity: 1, y: [0, -16, 0] }
-            }
-            transition={
-              reduceMotion
-                ? { duration: 0.8 }
-                : {
-                    opacity: { duration: 0.9, delay: f.delay },
-                    y: { duration: 7, repeat: Infinity, ease: 'easeInOut', delay: f.delay },
-                  }
-            }
+            fetchPriority="high"
           />
-        ))}
-      </div>
-
-      <div className="hero__content">
-        <motion.p
-          className="eyebrow hero__eyebrow"
-          initial={{ opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-        >
-          Estúdio de design &amp; social media
-        </motion.p>
-
-        <motion.h1
-          className="hero__title"
-          initial={{ opacity: 0, y: 24 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-        >
-          Design que faz
-          <br />
-          marcas serem <span>lembradas</span>.
-        </motion.h1>
+          <div className="hero__frame-veil" />
+        </motion.div>
 
         <motion.div
-          className="hero__foot"
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.35 }}
+          className="hero__copy"
+          style={expansive ? { opacity: copyOpacity, y: copyY } : undefined}
+          initial={expansive ? false : { opacity: 0, y: 24 }}
+          animate={expansive ? undefined : { opacity: 1, y: 0 }}
+          transition={expansive ? undefined : { duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
         >
-          <a className="hero__cta" href="#trabalhos">
-            Ver trabalhos
-            <ArrowIcon width={16} height={16} />
-          </a>
-          <p className="hero__wordmark">
-            CORDEIRO <span>/</span> LABS
-          </p>
+          <p className="eyebrow hero__eyebrow">Independent Design Studio</p>
+          <h1 className="hero__title">
+            CORDEIRO LABS<span className="mark-reg">®</span>
+          </h1>
+          <p className="hero__tagline">Building identities for brands that want to be remembered.</p>
+          <GlassButton href="#work" symbol="↓" className="hero__cta">
+            View Our Work
+          </GlassButton>
         </motion.div>
+
+        {expansive && (
+          <motion.div className="hero__cue" style={{ opacity: cueOpacity }} aria-hidden="true">
+            <span className="hero__cue-line" />
+            Scroll
+          </motion.div>
+        )}
       </div>
     </section>
   )

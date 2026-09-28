@@ -7,15 +7,14 @@
   border-bottom: 1px solid transparent;
   transition:
     background-color 0.4s ease,
-    border-color 0.4s ease,
-    backdrop-filter 0.4s ease;
+    border-color 0.4s ease;
 }
 
 .header--scrolled {
   background: rgba(10, 10, 11, 0.72);
   border-bottom-color: var(--border);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 }
 
 .header__bar {
@@ -29,13 +28,9 @@
 
 .header__mark {
   font-family: var(--font-display);
-  font-size: 19px;
+  font-size: 16px;
   font-weight: 600;
-  letter-spacing: -0.01em;
-}
-
-.header__mark span {
-  color: var(--accent);
+  letter-spacing: 0.04em;
 }
 
 .header__nav {
@@ -87,6 +82,17 @@
 }
 
 @media (max-width: 720px) {
+  /* A fixed header with a live backdrop-filter has to resample whatever
+     scrolls underneath it on every frame. That's a cost worth paying on
+     desktop for the frosted look, but on weaker mobile GPUs a flat,
+     slightly more opaque background reads almost identically while
+     removing that per-frame resample entirely. */
+  .header--scrolled {
+    background: rgba(10, 10, 11, 0.88);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+
   .header__nav {
     display: none;
   }

@@ -1,39 +1,56 @@
 import { contact } from '../data/contact.js'
 import Reveal from './Reveal.jsx'
+import GlassButton from './GlassButton.jsx'
 import { ArrowIcon, InstagramIcon, MailIcon, WhatsappIcon } from './Icons.jsx'
 import './Contact.css'
 
-const CHANNELS = [
-  { key: 'instagram', label: 'Instagram', Icon: InstagramIcon, data: contact.instagram },
-  { key: 'whatsapp', label: 'WhatsApp', Icon: WhatsappIcon, data: contact.whatsapp },
-  { key: 'email', label: 'E-mail', Icon: MailIcon, data: contact.email },
-]
+const ICONS = {
+  email: MailIcon,
+  phone: WhatsappIcon,
+  instagram: InstagramIcon,
+}
+
+const CHANNELS = [contact.email, contact.phone, contact.instagram]
 
 export default function Contact() {
   return (
-    <section id="contato" className="section contact">
-      <Reveal>
-        <h2 className="contact__title">
-          Vamos criar
-          <br />
-          algo <span>juntos</span>?
-        </h2>
+    <section id="contact" className="section contact">
+      <Reveal className="contact__intro">
+        <span className="eyebrow">Contact</span>
+        <h2 className="contact__title">Let's build something worth remembering.</h2>
+        <GlassButton href={contact.email.href} symbol="↗" className="contact__cta">
+          Start a Project
+        </GlassButton>
       </Reveal>
 
-      <Reveal delay={0.1} className="contact__channels">
-        {CHANNELS.map(({ key, label, Icon, data }) => (
-          <a key={key} className="contact__channel" href={data.href} target="_blank" rel="noreferrer">
-            <span className="contact__channel-head">
-              <Icon width={18} height={18} />
-              {label}
-            </span>
-            <span className="contact__channel-value">
-              {data.label}
-              <ArrowIcon width={16} height={16} />
-            </span>
-          </a>
-        ))}
-      </Reveal>
+      <div className="contact__cards">
+        {CHANNELS.map((channel, i) => {
+          const Icon = ICONS[channel.key]
+          return (
+            <Reveal
+              as="a"
+              key={channel.key}
+              delay={i * 0.08}
+              href={channel.href}
+              target={channel.key === 'email' ? undefined : '_blank'}
+              rel={channel.key === 'email' ? undefined : 'noreferrer'}
+              className="contact-card"
+            >
+              <span className="contact-card__index">{`0${i + 1}`}</span>
+              <span className="contact-card__icon">
+                <Icon width={18} height={18} />
+              </span>
+              <span className="contact-card__body">
+                <span className="contact-card__label">{channel.label}</span>
+                <span className="contact-card__value">
+                  {channel.value}
+                  <ArrowIcon width={15} height={15} />
+                </span>
+              </span>
+            </Reveal>
+          )
+        })}
+      </div>
     </section>
   )
 }

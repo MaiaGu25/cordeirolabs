@@ -140,3 +140,11 @@ ul {
   outline: 2px solid var(--accent);
   outline-offset: 3px;
 }
+
+.mark-reg {
+  font-size: 0.42em;
+  font-weight: 500;
+  vertical-align: super;
+  opacity: 0.7;
+  margin-left: 0.08em;
+}

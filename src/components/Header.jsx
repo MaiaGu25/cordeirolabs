@@ -4,9 +4,10 @@ import { CloseIcon, MenuIcon } from './Icons.jsx'
 import './Header.css'
 
 const LINKS = [
-  { label: 'Trabalhos', href: '#trabalhos' },
-  { label: 'Sobre', href: '#sobre' },
-  { label: 'Contato', href: '#contato' },
+  { label: 'Work', href: '#work' },
+  { label: 'Services', href: '#services' },
+  { label: 'About', href: '#about' },
+  { label: 'Contact', href: '#contact' },
 ]
 
 export default function Header() {
@@ -14,8 +15,20 @@ export default function Header() {
   const [open, setOpen] = useState(false)
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 40)
-    onScroll()
+    let ticking = false
+
+    const applyScrollState = () => {
+      setScrolled(window.scrollY > 40)
+      ticking = false
+    }
+
+    const onScroll = () => {
+      if (ticking) return
+      ticking = true
+      requestAnimationFrame(applyScrollState)
+    }
+
+    applyScrollState()
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
@@ -30,11 +43,11 @@ export default function Header() {
   return (
     <header className={`header ${scrolled ? 'header--scrolled' : ''}`}>
       <div className="header__bar">
-        <a className="header__mark" href="#topo">
-          Cordeiro<span>Labs</span>
+        <a className="header__mark" href="#top">
+          CORDEIRO LABS<span className="mark-reg">®</span>
         </a>
 
-        <nav className="header__nav" aria-label="Navegação principal">
+        <nav className="header__nav" aria-label="Primary">
           {LINKS.map((link) => (
             <a key={link.href} href={link.href}>
               {link.label}
@@ -45,7 +58,7 @@ export default function Header() {
         <button
           type="button"
           className="header__toggle"
-          aria-label={open ? 'Fechar menu' : 'Abrir menu'}
+          aria-label={open ? 'Close menu' : 'Open menu'}
           aria-expanded={open}
           onClick={() => setOpen((v) => !v)}
         >
@@ -62,7 +75,7 @@ export default function Header() {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
           >
-            <nav aria-label="Navegação mobile">
+            <nav aria-label="Mobile">
               {LINKS.map((link, i) => (
                 <motion.a
                   key={link.href}

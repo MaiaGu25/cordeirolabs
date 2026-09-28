@@ -1,0 +1,35 @@
+.about {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 28px;
+}
+
+.about__eyebrow {
+  margin-bottom: 12px;
+}
+
+.about__headline {
+  font-size: clamp(32px, 5.6vw, 68px);
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+  max-width: 18ch;
+}
+
+.about__body {
+  font-size: clamp(18px, 2.6vw, 30px);
+  font-weight: 500;
+  line-height: 1.4;
+  letter-spacing: -0.01em;
+  max-width: 26ch;
+  color: var(--fg-muted);
+}
+
+.about__body .text-reveal__word-bg {
+  color: var(--fg-faint);
+}
+
+.about__body .text-reveal__word-fg {
+  color: var(--fg);
+}

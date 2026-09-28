@@ -1,19 +1,28 @@
 <!doctype html>
-<html lang="pt-BR">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
-      content="CordeiroLabs — estúdio criativo de design gráfico, identidade visual e social media."
+      content="CORDEIRO LABS — an independent design studio building brand identities, social media and event design for ambitious brands."
     />
-    <title>CordeiroLabs — Estúdio Criativo</title>
+    <title>CORDEIRO LABS® — Independent Design Studio</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..700&family=Inter:wght@400;500;600&display=swap"
       rel="stylesheet"
+    />
+    <!-- Must match HERO_IMAGE in src/components/Hero.jsx — it's the only
+         image visible in the first viewport, so it's the only one worth
+         preloading ahead of the JS bundle. -->
+    <link
+      rel="preload"
+      as="image"
+      href="https://picsum.photos/seed/cordeirolabs-hero/1920/1280"
+      fetchpriority="high"
     />
   </head>
   <body>

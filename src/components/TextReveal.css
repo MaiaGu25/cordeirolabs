@@ -1,0 +1,22 @@
+.text-reveal {
+  font-family: var(--font-display);
+  font-weight: 600;
+}
+
+.text-reveal__word {
+  position: relative;
+  display: inline-block;
+  margin-right: 0.26em;
+}
+
+.text-reveal__word-bg {
+  color: var(--fg-faint);
+  opacity: 0.4;
+}
+
+.text-reveal__word-fg {
+  position: absolute;
+  inset: 0;
+  color: var(--fg);
+  white-space: nowrap;
+}

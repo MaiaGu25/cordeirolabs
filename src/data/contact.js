@@ -1,17 +1,23 @@
-// Dados de contato — placeholders fáceis de localizar e substituir.
-// Basta trocar `handle`/`href` por cada canal quando os dados reais existirem.
+// Contact data — placeholders, easy to find and replace once the studio's
+// real details exist. `key` drives display order in the Contact section.
 
 export const contact = {
-  instagram: {
-    label: '@cordeirolabs',
-    href: 'https://instagram.com/cordeirolabs', // TODO: substituir pelo Instagram real
-  },
-  whatsapp: {
-    label: '+55 (00) 00000-0000',
-    href: 'https://wa.me/5500000000000', // TODO: substituir pelo número real (formato wa.me)
-  },
   email: {
-    label: 'ola@cordeirolabs.com',
-    href: 'mailto:ola@cordeirolabs.com', // TODO: substituir pelo e-mail real
+    key: 'email',
+    label: 'Email',
+    value: 'hello@cordeirolabs.com',
+    href: 'mailto:hello@cordeirolabs.com', // TODO: replace with the real address
+  },
+  phone: {
+    key: 'phone',
+    label: 'Phone / WhatsApp',
+    value: '+00 00000-0000',
+    href: 'https://wa.me/000000000000', // TODO: replace with the real number
+  },
+  instagram: {
+    key: 'instagram',
+    label: 'Instagram',
+    value: '@cordeirolabs',
+    href: 'https://instagram.com/cordeirolabs', // TODO: replace with the real handle
   },
 }

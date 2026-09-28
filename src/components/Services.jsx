@@ -2,16 +2,15 @@ import Reveal from './Reveal.jsx'
 import './Services.css'
 
 const SERVICES = [
-  { n: '01', label: 'Social Media' },
-  { n: '02', label: 'Design Gráfico' },
-  { n: '03', label: 'Identidade Visual' },
-  { n: '04', label: 'Conteúdo Digital' },
+  { n: '01', label: 'Brand Identity' },
+  { n: '02', label: 'Social Media' },
+  { n: '03', label: 'Event Design' },
 ]
 
 export default function Services() {
   return (
-    <section className="section services">
-      <Reveal className="eyebrow services__eyebrow">O que fazemos</Reveal>
+    <section id="services" className="section services">
+      <Reveal className="eyebrow services__eyebrow">Services</Reveal>
 
       <ul className="services__list">
         {SERVICES.map((service, i) => (

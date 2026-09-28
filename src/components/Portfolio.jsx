@@ -7,10 +7,10 @@ export default function Portfolio() {
   const reduceMotion = useReducedMotion()
 
   return (
-    <section id="trabalhos" className="section portfolio">
+    <section id="work" className="section portfolio">
       <Reveal className="portfolio__head">
-        <span className="eyebrow">Trabalhos</span>
-        <h2 className="portfolio__title">Uma seleção de peças recentes.</h2>
+        <span className="eyebrow">Selected Work</span>
+        <h2 className="portfolio__title">Identity, content and events — built with intent.</h2>
       </Reveal>
 
       <motion.div
@@ -21,16 +21,13 @@ export default function Portfolio() {
         variants={{
           hidden: {},
           show: {
-            transition: reduceMotion
-              ? {}
-              : { staggerChildren: 0.08, delayChildren: 0.05 },
+            transition: reduceMotion ? {} : { staggerChildren: 0.08, delayChildren: 0.05 },
           },
         }}
       >
         {projects.map((project) => (
-          <motion.a
-            key={project.id}
-            href={project.link}
+          <motion.div
+            key={project.slug}
             className={`portfolio__item portfolio__item--${project.size}`}
             data-size={project.size}
             variants={{
@@ -44,17 +41,20 @@ export default function Portfolio() {
           >
             <div className="portfolio__media">
               <img
-                src={project.image}
-                alt={`${project.title} — ${project.description}`}
+                src={project.cover}
+                alt={`${project.title} — ${project.shortDescription}`}
                 loading="lazy"
                 decoding="async"
               />
             </div>
             <div className="portfolio__overlay">
-              <span className="portfolio__category">{project.category}</span>
+              <div className="portfolio__meta">
+                <span className="portfolio__category">{project.category}</span>
+                {project.conceptProject && <span className="portfolio__tag">Concept</span>}
+              </div>
               <span className="portfolio__name">{project.title}</span>
             </div>
-          </motion.a>
+          </motion.div>
         ))}
       </motion.div>
     </section>
