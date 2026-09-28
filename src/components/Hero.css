@@ -1,0 +1,153 @@
+.hero {
+  position: relative;
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
+  padding: 140px var(--gutter) 80px;
+  overflow: hidden;
+}
+
+.hero__field {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.hero__float {
+  position: absolute;
+  border-radius: 14px;
+  object-fit: cover;
+  filter: saturate(0.85) brightness(0.75);
+  box-shadow: 0 30px 60px -20px rgba(0, 0, 0, 0.6);
+  opacity: 0.9;
+}
+
+.hero__float--a {
+  width: min(24vw, 300px);
+  height: auto;
+  aspect-ratio: 340 / 420;
+  top: 14%;
+  right: 6%;
+  transform: rotate(4deg);
+}
+
+.hero__float--b {
+  width: min(17vw, 220px);
+  height: auto;
+  aspect-ratio: 260 / 200;
+  bottom: 12%;
+  left: 4%;
+  transform: rotate(-6deg);
+}
+
+.hero__float--c {
+  width: min(13vw, 170px);
+  height: auto;
+  aspect-ratio: 220 / 280;
+  bottom: 20%;
+  right: 20%;
+  transform: rotate(8deg);
+}
+
+.hero__content {
+  position: relative;
+  z-index: 1;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  width: 100%;
+}
+
+.hero__eyebrow {
+  margin-bottom: 28px;
+}
+
+.hero__title {
+  font-size: clamp(44px, 8vw, 108px);
+  line-height: 1.02;
+  letter-spacing: -0.03em;
+  max-width: 16ch;
+}
+
+.hero__title span {
+  color: var(--accent);
+  font-style: italic;
+}
+
+.hero__foot {
+  margin-top: clamp(40px, 6vw, 72px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  flex-wrap: wrap;
+  border-top: 1px solid var(--border);
+  padding-top: 24px;
+}
+
+.hero__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--fg);
+  padding: 12px 4px;
+}
+
+.hero__cta svg {
+  transition: transform 0.3s ease;
+}
+
+.hero__cta:hover svg {
+  transform: translate(3px, -3px);
+}
+
+.hero__wordmark {
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  color: var(--fg-faint);
+}
+
+.hero__wordmark span {
+  color: var(--accent);
+}
+
+@media (max-width: 720px) {
+  .hero {
+    min-height: 92svh;
+    padding: 120px 20px 56px;
+    align-items: flex-end;
+  }
+
+  .hero__field {
+    opacity: 0.55;
+  }
+
+  .hero__float--a {
+    width: 42vw;
+    top: 8%;
+    right: -8%;
+  }
+
+  .hero__float--b {
+    width: 34vw;
+    bottom: 30%;
+    left: -6%;
+  }
+
+  .hero__float--c {
+    display: none;
+  }
+
+  .hero__title {
+    max-width: none;
+  }
+
+  .hero__foot {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+}
